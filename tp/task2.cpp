@@ -1,22 +1,22 @@
 #include "task2.h"
 
-SentenceFilter::SentenceFilter() : source(""), FlagT(false) {
-    cout << "Вызван конструктор без параметров для класса SentenceFilter\n";
+TextFilter::TextFilter() : source(""), FlagT(false) {
+    cout << "Вызван конструктор без параметров для класса TextFilter." << endl;
 }
-SentenceFilter::SentenceFilter(const string& filename): source(filename), FlagT(false) {
-    cout << "Вызван конструктор с параметрами для класса SentenceFilter\n";
+TextFilter::TextFilter(const string& filename): source(filename), FlagT(false) {
+    cout << "Вызван конструктор с параметрами для класса TextFilter." << endl;
 }
-SentenceFilter::SentenceFilter(const string& text, bool t): source(text), FlagT(t) {
-    cout << "Вызван конструктор с параметрами для класса SentenceFilter\n";
+TextFilter::TextFilter(const string& text, bool t): source(text), FlagT(t) {
+    cout << "Вызван конструктор с параметрами для класса TextFilter." << endl;
 }
-SentenceFilter::SentenceFilter(const SentenceFilter& other) : source(other.source), FlagT(other.FlagT) {
-    cout << "Вызван конструктор копирования для класса SentenceFilter\n";
+TextFilter::TextFilter(const TextFilter& other) : source(other.source), FlagT(other.FlagT) {
+    cout << "Вызван конструктор копирования для класса TextFilter." << endl;
 }
-SentenceFilter::~SentenceFilter() {
-    cout << "Вызван деструктор для класса SentenceFilter\n";
+TextFilter::~TextFilter() {
+    cout << "Вызван деструктор для класса TextFilter." << endl;
 }
 
-bool SentenceFilter::check_first_char(const string& word) {
+bool TextFilter::check_first_char(const string& word) {
     char first_char = word[0];
     if (first_char == 'a' || first_char == 'e' || first_char == 'i' || first_char == 'o' || first_char == 'u' || first_char == 'y')
         return 1;
@@ -24,7 +24,7 @@ bool SentenceFilter::check_first_char(const string& word) {
         return 0;
 }
 
-void SentenceFilter::output() {
+void TextFilter::output() {
     if (FlagT) { //для строки
         string text = source;
         stringstream ss(text);
@@ -37,7 +37,7 @@ void SentenceFilter::output() {
             }
             modifiedLine += word + " "; //собираем строку с изменениями
         }
-        cout << modifiedLine << std::endl;
+        cout << modifiedLine << endl;
     }
     else { //для файла
         ifstream file(source);
@@ -57,7 +57,7 @@ void SentenceFilter::output() {
                 }
                 modifiedLine += word + " ";
             }
-            cout << modifiedLine << std::endl;
+            cout << modifiedLine << endl;
         }
         file.close();
     }   

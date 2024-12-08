@@ -8,16 +8,16 @@
 
 using namespace std;
 
-class SentenceFilter {
+class TextFilter {
 private:
     string source;
     bool FlagT;
 public:
-    SentenceFilter();
-    SentenceFilter(const string& filename);
-    SentenceFilter(const string& text, bool t);
-    SentenceFilter(const SentenceFilter& other);
-    ~SentenceFilter();
+    TextFilter();
+    TextFilter(const string& filename);
+    TextFilter(const string& text, bool t);
+    TextFilter(const TextFilter& other);
+    ~TextFilter();
 
     bool check_first_char(const string& word);
     void output();

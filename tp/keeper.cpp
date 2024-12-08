@@ -1,4 +1,5 @@
 #include "keeper.h"
+#include "check.h"
 #include <windows.h>
 
 Keeper::Keeper() : head(nullptr), tail(nullptr), count(0) { cout << "Вызван конструктор класса Keeper\n"; }
@@ -22,7 +23,7 @@ int Keeper::get_count() { return count; }
 
 void Keeper::add_element(NOTE* el, int n) {
     if (n < 1 || n > count+1)
-        throw out_of_range("Index out of range");
+        throw out_of_range("Индекс вне диапазона! Ваша запись не добавлена.\n");
 
     Element* el_to_add = new Element;
     el_to_add->data = el;
@@ -47,10 +48,11 @@ void Keeper::add_element(NOTE* el, int n) {
         }
     }
     count++;
+    cout << "Новый элемент добавлен." << endl;
 }
 Keeper& Keeper::delete_element(int n) {
     if (n < 1 || n > count)
-        throw out_of_range("Index out of range");
+        throw out_of_range("Индекс вне диапазона! Проверьте индекс элемента, который хотите удалить, и попробуйте еще раз.\n");
     
     Element* el_to_del = head;
     if (n == 1) {
@@ -74,12 +76,12 @@ Keeper& Keeper::delete_element(int n) {
         delete el_to_del;
     }
     count--;
-    cout << "Вы удалили один элемент." << endl;
+    cout << "Элемент удалён." << endl;
     return *this;
 }
 Keeper& Keeper::edit_element(int n) {
     if (n < 1 || n > count)
-        throw out_of_range("Index out of range");
+        throw out_of_range("Индекс вне диапазона! Проверьте номер записи и попробуйте еще раз.\n");
     
     Element* tmp = head;
     for (int i = 1; i < n; i++) {
@@ -87,6 +89,7 @@ Keeper& Keeper::edit_element(int n) {
     }
     if (tmp->data) {
         tmp->data->edit_note();
+        cout << "Элемент номер " << n << " изменён." << endl;
     }
     else {
         cout << "Данных у данного элемента нет." << endl;
@@ -132,7 +135,7 @@ void Keeper::print_keeper() {
 void Keeper::sort() {
     if (count < 2) return;
 
-    for (Element* i = head; i != nullptr; i = i->next) {
+    for (Element* i = head; i != nullptr; i = (i->next)) {
         for (Element* j = head; j->next != nullptr; j = j->next) {
             if (j->data->get_FIO() > j->next->data->get_FIO()) {
                 NOTE* temp = j->data;
@@ -160,14 +163,14 @@ Keeper& Keeper::operator++(int) {
     cin >> arr[2];
     NOTE* el = new NOTE(fio, tel, arr);
     cout << "Введите позицию, на которую хотите добавить элемент: ";
-    cin >> n;
+    n = check_input();
     this->add_element(el, n);
     return *this;
 }
 Keeper& Keeper::operator--(int) {
     int n;
     cout << "Введите номер элемента, который хотите удалить: ";
-    cin >> n;
+    n = check_input();
     this->delete_element(n);
     return *this;
 }
